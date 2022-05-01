@@ -182,6 +182,26 @@ class App extends MY_Controller {
         
         redirect(base_url("app/conversion_rate"));
     }
+
+    public function pengaturan(){
+        $data['id_cs'] = $this->session->userdata("id_cs");
+        $data['title'] = 'Pengaturan';
+
+        $data['menu'] = "pengaturan";
+        $data['js'] = [
+            "ajax.js",
+            "function.js",
+            "helper.js",
+        ];
+        
+
+        $this->load->view("pages/app/pengaturan", $data);
+    }
+
+    public function edit_password(){
+        $data = $this->app->edit_password();
+        echo json_encode($data);
+    }
 }
 
 /* End of file Produk.php */

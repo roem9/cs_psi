@@ -295,6 +295,14 @@ class App_model extends MY_Model {
         $this->edit_data("setting_cs", ["id_cs" => $id_cs], $data);
     }
 
+    public function edit_password(){
+        $id_cs = $this->session->userdata("id_cs");
+        $password = $this->input->post("password");
+
+        $query = $this->edit_data("cs", ["id_cs" => $id_cs], ["password" => md5($password)]);
+        if($query) return 1;
+        else return 0;
+    }
 }
 
 /* End of file App_model.php */
