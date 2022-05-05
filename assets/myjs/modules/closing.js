@@ -159,13 +159,13 @@ function loadKomen(id_closing) {
 $(document).on("click", ".komplainClosing", function(){
     var id_closing = $(this).data("id");
 
-    console.log(id_closing)
-
     loadKomplain(id_closing);
 })
 
 function loadKomplain(id_closing) {
     let result = ajax(url_base+"app/list_komplain", "POST", {id_closing:id_closing});
+
+    console.log(result)
     
     $("#komplainClosing [name='id_closing'").val(result.closing.id_closing);
     $("#komplainClosing #nama_closing").html("<b>"+result.closing.nama_closing+"</b>");

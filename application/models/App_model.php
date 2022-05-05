@@ -127,14 +127,14 @@ class App_model extends MY_Model {
             $data['komplain'][$i] = $komplain;
             $data['komplain'][$i]['tgl_input'] = date("d-m-y", strtotime($komplain['tgl_input']));
             $data['komplain'][$i]['tgl_tertangani'] = date("d-m-y", strtotime($komplain['tgl_tertangani']));
-            
             if($komplain['status'] == "Selesai"){
-                $tgl1 = new DateTime($data['komplain'][$i]['tgl_input']);
-                $tgl2 = new DateTime($data['komplain'][$i]['tgl_tertangani']);
+                $tgl1 = new DateTime(date("Y-m-d", strtotime($komplain['tgl_input'])));
+                $tgl2 = new DateTime($komplain['tgl_tertangani']);
                 $durasi = date_diff($tgl1, $tgl2);
     
                 $data['komplain'][$i]['durasi'] = $durasi->d . " hari";
             }
+            
         }
 
         $data['closing'] = $this->get_one("closing", ["id_closing" => $id_closing]);
