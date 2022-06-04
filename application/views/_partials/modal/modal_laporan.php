@@ -12,6 +12,17 @@
                         <label class="col-form-label">Tgl Laporan</label>
                     </div>
                     <div class="form-floating mb-3">
+                        <select name="produk" class="form form-control form-control-sm required">
+                            <option value="">Pilih Produk</option>
+                            <?php
+                                $produk = produk();
+                                foreach ($produk as $produk) :?>
+                                <option value="<?= $produk['produk']?>"><?= $produk['produk']?></option>
+                            <?php endforeach;?>
+                        </select>
+                        <label for="">Produk</label>
+                    </div>
+                    <div class="form-floating mb-3">
                         <input type="text" name="leads_iklan" class="form form-control form-control-sm number required">
                         <label class="col-form-label">Leads Iklan</label>
                     </div>
@@ -47,6 +58,17 @@
                 <div class="form-floating mb-3">
                     <input type="date" name="tgl_laporan" class="form form-control form-control-sm required">
                     <label class="col-form-label">Tgl Laporan</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select name="produk" class="form form-control form-control-sm required">
+                        <option value="">Pilih Produk</option>
+                        <?php
+                            $produk = produk();
+                            foreach ($produk as $produk) :?>
+                            <option value="<?= $produk['produk']?>"><?= $produk['produk']?></option>
+                        <?php endforeach;?>
+                    </select>
+                    <label for="">Produk</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" name="leads_iklan" class="form form-control form-control-sm number required">

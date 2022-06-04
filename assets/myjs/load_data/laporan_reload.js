@@ -15,6 +15,7 @@ var datatable = $('#dataTable').DataTable({
     ajax: {"url": url_base+"app/load_laporan", "type": "POST"},
     columns: [
         {"data": "tgl_laporan"},
+        {"data": "produk"},
         {"data": "leads_iklan"},
         {"data": "leads_inbox"},
         {"data": "leads_komen"},

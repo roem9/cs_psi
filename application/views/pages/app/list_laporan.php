@@ -39,10 +39,11 @@
                             <table id="dataTable" class="table card-table table-vcenter text-dark">
                                 <thead>
                                     <tr>
-                                        <th class="text-dark desktop mobile-l mobile-p tablet-l tablet-p" style="font-size: 11px">Tgl Laporan</th>
-                                        <th class="text-dark desktop" style="font-size: 11px">Leads Iklan</th>
-                                        <th class="text-dark desktop" style="font-size: 11px">Leads Inbox</th>
-                                        <th class="text-dark desktop" style="font-size: 11px">Leads Komen</th>
+                                        <th class="text-dark desktop mobile-l mobile-p tablet-l tablet-p w-1 text-nowrap" style="font-size: 11px">Tgl Laporan</th>
+                                        <th class="text-dark desktop" style="font-size: 11px">Produk</th>
+                                        <th class="text-dark desktop w-1 text-nowrap" style="font-size: 11px">Leads Iklan</th>
+                                        <th class="text-dark desktop w-1 text-nowrap" style="font-size: 11px">Leads Inbox</th>
+                                        <th class="text-dark desktop w-1 text-nowrap" style="font-size: 11px">Leads Komen</th>
                                         <th class="text-dark desktop w-1" style="font-size: 11px">Tindakan</th>
                                     </tr>
                                 </thead>

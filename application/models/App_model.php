@@ -167,7 +167,7 @@ class App_model extends MY_Model {
 
     public function load_laporan(){
         $id_cs = $this->session->userdata('id_cs');
-        $this->datatables->select('id_laporan, tgl_laporan, leads_iklan, leads_inbox, leads_komen');
+        $this->datatables->select('id_laporan, tgl_laporan, leads_iklan, leads_inbox, leads_komen, produk');
         $this->datatables->from('laporan_harian');
         $this->datatables->where('id_cs', $id_cs);
         $this->db->order_by("tgl_laporan", "desc");
