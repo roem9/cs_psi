@@ -8,17 +8,18 @@
             <div class="page-body">
                 <div class="container-xl">
                     
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4 overflow-auto">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 
                                 <?php 
                                     $sisa_komisi = 0;
-                                    foreach ($komisi['periode'] as $data_komisi) :
-                                        $sisa_komisi += ($data_komisi['komisi'] - $data_komisi['pencairan']);
+                                    if($komisi){
+                                        foreach ($komisi['periode'] as $data_komisi){
+                                            $sisa_komisi += ($data_komisi['komisi'] - $data_komisi['pencairan']);
+                                        }
+                                    }
                                 ?>
-
-                                <?php endforeach;?>
 
                                 <h3>Rekapan Komisi</h3>
                                 <h3>Sisa Komisi <?= rupiah($sisa_komisi)?></h3>
@@ -57,15 +58,16 @@
                         </div>
                     </div>
 
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4 overflow-auto">
                         <div class="card-body">
                             <h3>Riwayat Pencairan</h3>
                             <table id="dataTable" class="table card-table table-vcenter text-dark">
                                 <thead>
                                     <tr>
-                                        <th class="text-dark desktop" style="font-size: 11px">Tgl Pencairan</th>
-                                        <th class="text-dark desktop" style="font-size: 11px">Periode</th>
-                                        <th class="text-dark desktop" style="font-size: 11px">Nominal</th>
+                                        <th class="text-dark desktop w-1 text-nowrap" style="font-size: 11px">Tgl Pencairan</th>
+                                        <th class="text-dark desktop w-1 text-nowrap" style="font-size: 11px">Periode</th>
+                                        <th class="text-dark desktop w-1" style="font-size: 11px">Nominal</th>
+                                        <th class="text-dark desktop" style="font-size: 11px">Catatan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,8 +76,9 @@
                                             foreach ($pencairan as $pencairan) :?>
                                             <tr>
                                                 <td><?= date("d M Y", strtotime($pencairan['tgl_pencairan']))?></td>
-                                                <td><?= periode($pencairan['periode'])?></td>
-                                                <td><?= rupiah($pencairan['nominal'])?></td>
+                                                <td class="text-nowrap"><?= periode($pencairan['periode'])?></td>
+                                                <td class="text-nowrap"><?= rupiah($pencairan['nominal'])?></td>
+                                                <td><?= $pencairan['catatan']?></td>
                                             </tr>
                                             <?php endforeach;?>
                                     <?php endif;?>

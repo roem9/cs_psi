@@ -228,6 +228,8 @@ class App_model extends MY_Model {
         $this->db->select("id_closing, tgl_closing, DATE_FORMAT(tgl_closing, '%M %Y') as periode")->from("closing")->where(["id_cs" => $id_cs, "status" => "Delivered"])->group_by('MONTH(tgl_closing), YEAR(tgl_closing)');
         $periode = $this->db->get()->result_array();
 
+        $data = [];
+        
         foreach ($periode as $i => $periode) {
             $komisi = 0;
 

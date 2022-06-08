@@ -146,6 +146,7 @@ class App extends MY_Controller {
 
         $data['labels'] = [];
         $data['data'] = [];
+        $data['warna'] = [];
 
         foreach ($closing as $i => $data_closing) {
             $data['labels'][$i] = date("d-m-y", strtotime($data_closing['tgl_closing']));
