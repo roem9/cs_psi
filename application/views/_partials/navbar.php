@@ -5,7 +5,7 @@
             <ul class="navbar-nav">
             <li class="nav-item dropdown" id="Produk">
 
-                <li class="nav-item" id="closing">
+                <!-- <li class="nav-item" id="closing">
                     <a class="nav-link btnLoading" href="<?= base_url()?>app/closing" role="button" aria-expanded="false" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg width="24" height="24" class="me-3">
@@ -16,6 +16,32 @@
                             List Closing
                         </span>
                     </a>
+                </li> -->
+                <li class="nav-item dropdown" id="Closing">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" role="button" aria-expanded="false" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg width="24" height="24" class="me-3">
+                                <use xlink:href="<?= base_url()?>assets/tabler-icons-1.39.1/tabler-sprite.svg#tabler-shopping-cart-plus" />
+                            </svg> 
+                        </span>
+                        <span class="nav-link-title">
+                            Closing
+                        </span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" id="listPenjualan" href="<?= base_url()?>app/listclosing" >
+                            Semua Penjualan
+                        </a>
+                        <a class="dropdown-item" id="pendingPickup" href="<?= base_url()?>app/closingpendingpickup" >
+                            Pending Pickup
+                        </a>
+                        <a class="dropdown-item" id="perluPerhatian" href="<?= base_url()?>app/closingperluperhatian" >
+                            Perlu Perhatian
+                        </a>
+                        <a class="dropdown-item" id="returCancel" href="<?= base_url()?>app/closingreturcancel" >
+                            Retur & Cancel
+                        </a>
+                    </div>
                 </li>
 
                 <li class="nav-item" id="kpi">

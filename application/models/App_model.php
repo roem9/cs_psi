@@ -14,9 +14,127 @@ class App_model extends MY_Model {
 
     public function load_closing(){
         $id_cs = $this->session->userdata('id_cs');
-        $this->datatables->select('id_closing, tgl_closing, catatan, jenis_closing, nama_closing, nominal_transaksi, nama_cs, nama_gudang, status, tgl_input, tgl_delivery, tgl_ubah_status, tgl_retur_cancel');
+        $this->datatables->select('id_closing, tgl_closing, catatan, jenis_closing, nama_closing, nominal_transaksi, nama_cs, nama_gudang, status, tgl_input, tgl_delivery, tgl_ubah_status, tgl_retur_cancel, no_hp');
         $this->datatables->from('closing');
-        $this->datatables->where('id_cs', $id_cs);
+        $this->datatables->where("id_cs = '$id_cs' AND hapus = 0");
+        $this->db->order_by("tgl_closing", "desc");
+
+        $this->datatables->edit_column("status", "<span class='badge' style='background-color: $2'>$1</span>", "status, warna_status(status), id_closing");
+        $this->datatables->add_column("stok", "$1", "stok_varian(id_closing)");
+        $this->datatables->add_column("produk_closing", "$1", "produk_closing(id_closing)");
+        $this->datatables->add_column("durasi", "$1", "durasi(tgl_input, tgl_closing, tgl_delivery, tgl_ubah_status, tgl_retur_cancel)");
+        $this->datatables->add_column("status_input", "$1", "status_input(tgl_input, tgl_closing)");
+        $this->datatables->add_column("status_delivered", "$1", "status_delivered(tgl_delivery, tgl_ubah_status)");
+
+        $this->datatables->add_column('menu','
+                    <span class="dropdown">
+                    <button class="btn align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
+                        '.tablerIcon("settings", "").'
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item detailClosing" data-bs-toggle="modal" href="#detailClosing" data-id="$1">
+                            '.tablerIcon("info-circle", "me-1").'
+                            Detail Closing
+                        </a>
+                        <a class="dropdown-item komenClosing" data-bs-toggle="modal" href="#komenClosing" data-id="$1">
+                            '.tablerIcon("message-circle", "me-1").'
+                            Komen
+                        </a>
+                        <a class="dropdown-item komplainClosing" data-bs-toggle="modal" href="#komplainClosing" data-id="$1">
+                            '.tablerIcon("alert-octagon", "me-1").'
+                            Komplain
+                        </a>
+                    </div>
+                    </span>', 'id_closing, md5(id_closing)');
+
+        return $this->datatables->generate();
+    }
+
+    public function load_closing_pending_pickup(){
+        $id_cs = $this->session->userdata('id_cs');
+        $this->datatables->select('id_closing, tgl_closing, catatan, jenis_closing, nama_closing, nominal_transaksi, nama_cs, nama_gudang, status, tgl_input, tgl_delivery, tgl_ubah_status, tgl_retur_cancel, no_hp');
+        $this->datatables->from('closing');
+        $this->datatables->where("id_cs = '$id_cs' AND hapus = 0 AND (status = 'Waiting' OR status = 'Produksi')");
+        $this->db->order_by("tgl_closing", "desc");
+
+        $this->datatables->edit_column("status", "<span class='badge' style='background-color: $2'>$1</span>", "status, warna_status(status), id_closing");
+        $this->datatables->add_column("stok", "$1", "stok_varian(id_closing)");
+        $this->datatables->add_column("produk_closing", "$1", "produk_closing(id_closing)");
+        $this->datatables->add_column("durasi", "$1", "durasi(tgl_input, tgl_closing, tgl_delivery, tgl_ubah_status, tgl_retur_cancel)");
+        $this->datatables->add_column("status_input", "$1", "status_input(tgl_input, tgl_closing)");
+        $this->datatables->add_column("status_delivered", "$1", "status_delivered(tgl_delivery, tgl_ubah_status)");
+
+        $this->datatables->add_column('menu','
+                    <span class="dropdown">
+                    <button class="btn align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
+                        '.tablerIcon("settings", "").'
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item detailClosing" data-bs-toggle="modal" href="#detailClosing" data-id="$1">
+                            '.tablerIcon("info-circle", "me-1").'
+                            Detail Closing
+                        </a>
+                        <a class="dropdown-item komenClosing" data-bs-toggle="modal" href="#komenClosing" data-id="$1">
+                            '.tablerIcon("message-circle", "me-1").'
+                            Komen
+                        </a>
+                        <a class="dropdown-item komplainClosing" data-bs-toggle="modal" href="#komplainClosing" data-id="$1">
+                            '.tablerIcon("alert-octagon", "me-1").'
+                            Komplain
+                        </a>
+                    </div>
+                    </span>', 'id_closing, md5(id_closing)');
+
+        return $this->datatables->generate();
+    }
+
+    public function load_closing_perlu_perhatian(){
+        $id_cs = $this->session->userdata('id_cs');
+        $this->datatables->select('a.id_closing, tgl_closing, catatan, jenis_closing, nama_closing, nominal_transaksi, nama_cs, nama_gudang, status, a.tgl_input, tgl_delivery, tgl_ubah_status, tgl_retur_cancel, no_hp');
+        $this->datatables->from("closing as a");
+        $this->datatables->join("komen_closing as b", "a.id_closing = b.id_closing");
+        // $this->datatables->join("komplain_closing as c", "a.id_closing = c.id_closing");
+        $this->datatables->where("id_cs = '$id_cs' AND hapus = 0 AND a.status != 'Delivered' AND a.status != 'Canceled' AND a.status != 'Returned'");
+        // $this->datatables->where("hapus", "0");
+        $this->db->group_by("a.id_closing");
+        $this->db->order_by("tgl_closing", "desc");
+
+        $this->datatables->edit_column("status", "<span class='badge' style='background-color: $2'>$1</span>", "status, warna_status(status), id_closing");
+        $this->datatables->add_column("stok", "$1", "stok_varian(id_closing)");
+        $this->datatables->add_column("produk_closing", "$1", "produk_closing(id_closing)");
+        $this->datatables->add_column("durasi", "$1", "durasi(tgl_input, tgl_closing, tgl_delivery, tgl_ubah_status, tgl_retur_cancel)");
+        $this->datatables->add_column("status_input", "$1", "status_input(tgl_input, tgl_closing)");
+        $this->datatables->add_column("status_delivered", "$1", "status_delivered(tgl_delivery, tgl_ubah_status)");
+
+        $this->datatables->add_column('menu','
+                    <span class="dropdown">
+                    <button class="btn align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
+                        '.tablerIcon("settings", "").'
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item detailClosing" data-bs-toggle="modal" href="#detailClosing" data-id="$1">
+                            '.tablerIcon("info-circle", "me-1").'
+                            Detail Closing
+                        </a>
+                        <a class="dropdown-item komenClosing" data-bs-toggle="modal" href="#komenClosing" data-id="$1">
+                            '.tablerIcon("message-circle", "me-1").'
+                            Komen
+                        </a>
+                        <a class="dropdown-item komplainClosing" data-bs-toggle="modal" href="#komplainClosing" data-id="$1">
+                            '.tablerIcon("alert-octagon", "me-1").'
+                            Komplain
+                        </a>
+                    </div>
+                    </span>', 'id_closing, md5(id_closing)');
+
+        return $this->datatables->generate();
+    }
+
+    public function load_closing_retur_cancel(){
+        $id_cs = $this->session->userdata('id_cs');
+        $this->datatables->select('id_closing, tgl_closing, catatan, jenis_closing, nama_closing, nominal_transaksi, nama_cs, nama_gudang, status, tgl_input, tgl_delivery, tgl_ubah_status, tgl_retur_cancel, no_hp');
+        $this->datatables->from('closing');
+        $this->datatables->where("id_cs = '$id_cs' AND hapus = 0 AND (status = 'Returned' OR status = 'Canceled')");
         $this->db->order_by("tgl_closing", "desc");
 
         $this->datatables->edit_column("status", "<span class='badge' style='background-color: $2'>$1</span>", "status, warna_status(status), id_closing");
@@ -225,7 +343,7 @@ class App_model extends MY_Model {
     public function komisi(){
         $id_cs = $id_cs = $this->session->userdata('id_cs');
 
-        $this->db->select("id_closing, tgl_closing, DATE_FORMAT(tgl_closing, '%M %Y') as periode")->from("closing")->where(["id_cs" => $id_cs, "status" => "Delivered"])->group_by('MONTH(tgl_closing), YEAR(tgl_closing)');
+        $this->db->select("id_closing, tgl_closing, DATE_FORMAT(tgl_closing, '%M %Y') as periode")->from("closing")->where("id_cs = '$id_cs' AND status = 'Delivered' AND hapus = 0")->group_by('MONTH(tgl_closing), YEAR(tgl_closing)');
         $periode = $this->db->get()->result_array();
 
         $data = [];
@@ -234,7 +352,7 @@ class App_model extends MY_Model {
             $komisi = 0;
 
             $data['periode'][$i] = $periode;
-            $closing = $this->get_all("closing", ["MONTH(tgl_closing)" => date("m", strtotime($periode['tgl_closing'])), "YEAR(tgl_closing)" => date("Y", strtotime($periode['tgl_closing'])), "status" => "Delivered"]);
+            $closing = $this->get_all("closing", ["MONTH(tgl_closing)" => date("m", strtotime($periode['tgl_closing'])), "YEAR(tgl_closing)" => date("Y", strtotime($periode['tgl_closing'])), "status" => "Delivered", "id_cs" => $id_cs, "hapus" => 0]);
             foreach ($closing as $closing) {
                 $detail_closing = $this->get_all("detail_closing",["id_closing" => $closing['id_closing']]);
                 foreach ($detail_closing as $detail_closing) {

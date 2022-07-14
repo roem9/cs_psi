@@ -4,9 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class App extends MY_Controller {
 
-    public function closing(){
+    public function listClosing(){
         $data['title'] = 'List Closing';
-        $data['menu'] = "closing";
+        $data['menu'] = "Closing";
+        $data['dropdown'] = "listPenjualan";
         $data['modal'] = ["modal_closing"];
         $data['js'] = [
             "ajax.js",
@@ -22,6 +23,72 @@ class App extends MY_Controller {
     public function load_closing(){
         header('Content-Type: application/json');
         $output = $this->app->load_closing();
+        echo $output;
+    }
+
+    public function closingPendingPickup(){
+        $data['title'] = 'List Closing Pending Pickup';
+        $data['menu'] = "Closing";
+        $data['dropdown'] = "pendingPickup";
+        $data['modal'] = ["modal_closing"];
+        $data['js'] = [
+            "ajax.js",
+            "function.js",
+            "helper.js",
+            "load_data/closing_pending_pickup_reload.js",
+            "modules/closing.js",
+        ];
+
+        $this->load->view("pages/app/list_closing", $data);
+    }
+
+    public function load_closing_pending_pickup(){
+        header('Content-Type: application/json');
+        $output = $this->app->load_closing_pending_pickup();
+        echo $output;
+    }
+
+    public function closingPerluPerhatian(){
+        $data['title'] = 'List Closing Perlu Perhatian';
+        $data['menu'] = "Closing";
+        $data['dropdown'] = "perluPerhatian";
+        $data['modal'] = ["modal_closing"];
+        $data['js'] = [
+            "ajax.js",
+            "function.js",
+            "helper.js",
+            "load_data/closing_perlu_perhatian_reload.js",
+            "modules/closing.js",
+        ];
+
+        $this->load->view("pages/app/list_closing", $data);
+    }
+
+    public function load_closing_perlu_perhatian(){
+        header('Content-Type: application/json');
+        $output = $this->app->load_closing_perlu_perhatian();
+        echo $output;
+    }
+
+    public function closingReturCancel(){
+        $data['title'] = 'List Closing Retur & Cancel';
+        $data['menu'] = "Closing";
+        $data['dropdown'] = "returCancel";
+        $data['modal'] = ["modal_closing"];
+        $data['js'] = [
+            "ajax.js",
+            "function.js",
+            "helper.js",
+            "load_data/closing_retur_cancel_reload.js",
+            "modules/closing.js",
+        ];
+
+        $this->load->view("pages/app/list_closing", $data);
+    }
+
+    public function load_closing_retur_cancel(){
+        header('Content-Type: application/json');
+        $output = $this->app->load_closing_retur_cancel();
         echo $output;
     }
 
@@ -125,7 +192,7 @@ class App extends MY_Controller {
         ];
 
         $data['komisi'] = $this->app->komisi();
-        $data['pencairan'] = $this->app->get_all("pencairan_cs", ["id_cs" => $data['id_cs']]);
+        $data['pencairan'] = $this->app->get_all("pencairan_cs", ["id_cs" => $data['id_cs']], "tgl_input", "DESC");
 
         // var_dump($data['komisi']['periode']);
 

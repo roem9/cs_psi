@@ -20,19 +20,19 @@
             <div class="page-body">
                 <div class="container-xl">
                     
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4 overflow-auto" style="min-height: 300px">
                         <div class="card-body">
                             <table id="dataTable" class="table card-table table-vcenter text-dark">
                                 <thead>
                                     <tr>
-                                        <th class="text-dark desktop w-1 text-nowrap" style="font-size: 11px">Tgl. Closing</th>
+                                        <th class="text-dark desktop mobile-l mobile-p tablet-l tablet-p text-nowrap" style="font-size: 11px">Tgl. Closing</th>
                                         <th class="text-dark desktop mobile-l mobile-p tablet-l tablet-p text-nowrap" style="font-size: 11px">Nama Customer</th>
                                         <th class="text-dark desktop" style="font-size: 11px">Pesanan Customer</th>
                                         <!-- <th class="text-dark desktop w-1" style="font-size: 11px">Nominal</th> -->
                                         <th class="text-dark desktop w-1" style="font-size: 11px">CS</th>
                                         <th class="text-dark desktop w-1" style="font-size: 11px">Gudang</th>
-                                        <th class="text-dark desktop w-1 text-nowrap" style="font-size: 11px">Durasi</th>
-                                        <th class="text-dark desktop w-1" style="font-size: 11px">Status</th>
+                                        <th class="text-dark desktop mobile-l mobile-p tablet-l tablet-p text-nowrap">Durasi</th>
+                                        <th class="text-dark desktop mobile-l mobile-p tablet-l tablet-p text-nowrap" style="font-size: 11px">Status</th>
                                         <th class="text-dark desktop w-1" style="font-size: 11px">Tindakan</th>
                                         <th class="text-dark none w-1" style="font-size: 11px">Jenis Customer</th>
                                         <th class="text-dark none w-1" style="font-size: 11px">Catatan</th>
@@ -59,6 +59,7 @@
 
     <script>
         $("#<?= $menu?>").addClass("active")
+        $("#<?= $dropdown?>").addClass("active")
     </script>
 
     <!-- load javascript -->

@@ -88,7 +88,7 @@ class Auth extends CI_Controller {
 
         $this->session->set_userdata($sess);
 
-        redirect(base_url("app/closing"));
+        redirect(base_url("app/listclosing"));
     }
 
     public function logout(){

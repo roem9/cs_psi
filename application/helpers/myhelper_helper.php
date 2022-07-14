@@ -207,7 +207,8 @@
 
     function durasi($tgl_input = "", $tgl_closing = "", $tgl_delivery = "", $tgl_ubah_status = "", $tgl_retur_cancel = ""){
         if($tgl_delivery == NULL && $tgl_retur_cancel == NULL){
-            $tgl1 = new DateTime($tgl_closing);
+            // $tgl1 = new DateTime($tgl_closing);
+            $tgl1 = new DateTime($tgl_input);
             $tgl2 = new DateTime('NOW');
             $durasi = date_diff($tgl1, $tgl2);
 
